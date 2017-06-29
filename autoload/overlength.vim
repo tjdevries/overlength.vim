@@ -11,6 +11,8 @@ endfunction
 let s:overlength_filetype_specific_lengths = {}
 function! overlength#set_overlength(filetype, length)
   let s:overlength_filetype_specific_lengths[a:filetype] = a:length
+
+  call overlength#highlight()
 endfunction
 
 function! overlength#get_overlength()
@@ -19,9 +21,12 @@ function! overlength#get_overlength()
   endif
 
   " Different options based on default_to_textwidth
-  " `0`: Don't use `&textwidth` at all. Always use `overlength#default_overlength`.
-  " `1`: Use `&textwidth`, unless it's 0, then use `overlength#default_overlength`.
-  " `2`: Always use `&textwidth`. There will be no highlighting where `&textwidth == 0`, unless added explicitly
+  " `0`: Don't use `&textwidth` at all.
+  "     Always use `overlength#default_overlength`.
+  " `1`: Use `&textwidth`, unless it's 0,
+  "     then use `overlength#default_overlength`.
+  " `2`: Always use `&textwidth`. There will be no highlighting where
+  "     `&textwidth == 0`, unless added explicitly
   "
   " If &textwidth == 0, we just won't highlight in that filetype, that's
   " handled later though
@@ -57,13 +62,13 @@ function! overlength#toggle() abort
 endfunction
 
 function! overlength#highlight() abort
-  if overlength#get_overlength() == 0
-    return
-  endif
-
   " TODO: It doesn't really cost that much to ALWAYS clear, just to make sure
   " we're in sync... but maybe we shouldn't
   call overlength#clear()
+
+  if overlength#get_overlength() == 0
+    return
+  endif
 
   if s:highlight_overlength
     if !exists('w:last_overlength')
