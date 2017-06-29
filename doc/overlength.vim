@@ -1,6 +1,6 @@
-(This is just a copy of my readme. Sorry ¯\_(ツ)_/¯ )
-
 ## overlength.vim
+
+(This is just a copy of my readme. Sorry ¯\_(ツ)_/¯ )
 
 Highlight when lines go over the length that you want them.
 
@@ -16,6 +16,18 @@ To toggle or turn it off, you can do the following:
 - Alternatives: `call overlength#disable()` or `call overlength#enable()`
 
 ### Configuration
+
+Example configuration:
+
+```vim
+let overlength#default_overlength = 120
+
+" Disable highlighting in markdown.
+call overlength#set_overlength('markdown', 0)
+
+" Highlight only at 120 characters in vim, even though textwidth = 78
+call overlength#set_overlength('vim', 120)
+```
 
 `overlength#default_to_textwidth`:
 - (Setting): Default to using the `&textwidth` option as the column to start drawing the overlength highlighting
@@ -41,3 +53,8 @@ To toggle or turn it off, you can do the following:
 - Function to change the highlighting background by specifying a `cterm` and `guibg`
 - Example: `call overlength#set_highlight('darkgrey', '#8b0000')`
 
+
+`overlength#highlight_to_end_of_line`:
+- (Setting): Highlight only the column or until the end of the line
+- Default: `v:true`
+- Example: `let overlength#highlight_to_end_of_line = v:false`

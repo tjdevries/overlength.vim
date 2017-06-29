@@ -25,12 +25,12 @@ function! overlength#get_overlength()
   "
   " If &textwidth == 0, we just won't highlight in that filetype, that's
   " handled later though
-  return overlength#default_to_textwidth > 0 ?
-        \ ( (overlength#default_to_textwidth == 1 && (&textwidth > 0)
-            \ || overlength#default_to_textwidth == 2) ?
+  return g:overlength#default_to_textwidth > 0 ?
+        \ ( (g:overlength#default_to_textwidth == 1 && (&textwidth > 0)
+            \ || g:overlength#default_to_textwidth == 2) ?
               \ &textwidth
-              \ : overlength#default_to_textwidth)
-        \ : overlength#default_overlength
+              \ : g:overlength#default_overlength)
+        \ : g:overlength#default_overlength
 endfunction
 
 function! overlength#set_highlight(cterm, guibg)
@@ -67,7 +67,8 @@ function! overlength#highlight() abort
 
   if s:highlight_overlength
     if !exists('w:last_overlength')
-      let w:last_overlength = matchadd('OverLength', '\%' . overlength#get_overlength() . 'v.*')
+      let repeat_char = g:overlength#highlight_to_end_of_line ? '.*' : ''
+      let w:last_overlength = matchadd('OverLength', '\%' . overlength#get_overlength() . 'v' . repeat_char)
     endif
   endif
 endfunction
