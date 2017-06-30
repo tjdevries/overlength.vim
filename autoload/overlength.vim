@@ -1,3 +1,5 @@
+highlight! OverLength ctermbg=darkgrey guibg=#8b0000
+
 let s:highlight_overlength = v:true
 
 function! overlength#enable() abort
@@ -15,6 +17,18 @@ function! overlength#set_overlength(filetype, length)
   call overlength#highlight()
 endfunction
 
+function! s:get_default_to_tw() abort
+  return get(g:, 'overlength#default_to_textwidth', 1)
+endfunction
+
+function! s:get_repeat_char() abort
+  return get(g:, 'overlength#highlight_to_end_of_line', v:true) ? '.*' : ''
+endfunction
+
+function! s:get_default_length() abort
+  return get(g:, 'overlength#default_overlength', 80)
+endfunction
+
 function! overlength#get_overlength()
   if has_key(s:overlength_filetype_specific_lengths, &filetype)
     return s:overlength_filetype_specific_lengths[&filetype]
@@ -30,12 +44,15 @@ function! overlength#get_overlength()
   "
   " If &textwidth == 0, we just won't highlight in that filetype, that's
   " handled later though
-  return g:overlength#default_to_textwidth > 0 ?
-        \ ( (g:overlength#default_to_textwidth == 1 && (&textwidth > 0)
-            \ || g:overlength#default_to_textwidth == 2) ?
+  let default_to_textwidth = s:get_default_to_tw()
+  let default_length = s:get_default_length()
+
+  return default_to_textwidth > 0 ?
+        \ ( (default_to_textwidth == 1 && (&textwidth > 0)
+            \ || default_to_textwidth == 2) ?
               \ &textwidth
-              \ : g:overlength#default_overlength)
-        \ : g:overlength#default_overlength
+              \ : default_length)
+        \ : default_length
 endfunction
 
 function! overlength#set_highlight(cterm, guibg)
@@ -72,8 +89,7 @@ function! overlength#highlight() abort
 
   if s:highlight_overlength
     if !exists('w:last_overlength')
-      let repeat_char = g:overlength#highlight_to_end_of_line ? '.*' : ''
-      let w:last_overlength = matchadd('OverLength', '\%' . overlength#get_overlength() . 'v' . repeat_char)
+      let w:last_overlength = matchadd('OverLength', '\%' . overlength#get_overlength() . 'v' . s:get_repeat_char())
     endif
   endif
 endfunction
