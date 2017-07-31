@@ -47,10 +47,14 @@ call overlength#set_overlength('vim', 120)
 - Default: `80`
 - Example: `let overlength#default_overlength = 72`
 
+`overlength#default_grace_legnth`:
+- (Setting): Decide how many spaces past your `overlength` you'd like to start highlighting
+- Default: `1`
+- Example: `let overlength#default_grace_legnth = 5`
+
 `call overlength#set_highlight(cterm, guibg)`:
 - (Function): Change the highlighting background by specifying a `cterm` and `guibg`
 - Example: `call overlength#set_highlight('darkgrey', '#8b0000')`
-
 
 `overlength#highlight_to_end_of_line`:
 - (Setting): Highlight only the column or until the end of the line
