@@ -89,7 +89,11 @@ function! overlength#highlight() abort
 
   if s:highlight_overlength
     if !exists('w:last_overlength')
-      let w:last_overlength = matchadd('OverLength', '\%' . overlength#get_overlength() . 'v' . s:get_repeat_char())
+      let w:last_overlength = matchadd('OverLength',
+            \ '\%' . 
+            \ (overlength#get_overlength() + g:overlength#default_grace_length)
+            \ . 'v' . s:get_repeat_char()
+            \ )
     endif
   endif
 endfunction
