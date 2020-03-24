@@ -60,3 +60,16 @@ call overlength#set_overlength('vim', 120)
 - (Setting): Highlight only the column or until the end of the line
 - Default: `v:true`
 - Example: `let overlength#highlight_to_end_of_line = v:false`
+
+### Note on Multi Width Bug
+
+I cannot figure out how to solve the problem for the case where `overlength#highlight_to_end_of_line` is set to `v:false`
+(i.e., you only want highlighting on the column only, not the whole line) due to the vim limitation of:
+
+```
+	Note that some virtual column positions will never match, because they
+	are halfway through a tab or other character that occupies more than
+	one screen character.
+```
+
+So, sometimes the highlighting will miss. If this bothers you, please leave an issue and maybe I can fix it.

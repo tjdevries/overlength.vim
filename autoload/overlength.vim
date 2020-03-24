@@ -4,10 +4,14 @@ let s:highlight_overlength = v:true
 
 function! overlength#enable() abort
   let s:highlight_overlength = v:true
+
+  call overlength#highlight()
 endfunction
 
 function! overlength#disable() abort
   let s:highlight_overlength = v:false
+
+  call overlength#clear()
 endfunction
 
 let s:overlength_filetype_specific_lengths = {}
@@ -23,6 +27,14 @@ endfunction
 
 function! s:get_repeat_char() abort
   return get(g:, 'overlength#highlight_to_end_of_line', v:true) ? '.*' : ''
+endfunction
+
+function! s:get_virtual_column_modifier() abort
+  return get(g:, 'overlength#highlight_to_end_of_line', v:true) ? '>' : ''
+endfunction
+
+function! s:get_virtual_column_offset() abort
+ return get(g:, 'overlength#highlight_to_end_of_line', v:true) ? -1 : 0
 endfunction
 
 function! s:get_default_length() abort
@@ -79,8 +91,6 @@ function! overlength#toggle() abort
 endfunction
 
 function! overlength#highlight() abort
-  " TODO: It doesn't really cost that much to ALWAYS clear, just to make sure
-  " we're in sync... but maybe we shouldn't
   call overlength#clear()
 
   if overlength#get_overlength() == 0
@@ -89,11 +99,14 @@ function! overlength#highlight() abort
 
   if s:highlight_overlength
     if !exists('w:last_overlength')
-      let w:last_overlength = matchadd('OverLength',
-            \ '\%' . 
-            \ (overlength#get_overlength() + g:overlength#default_grace_length)
+      let w:overlength_pattern = '\%' .
+            \ s:get_virtual_column_modifier() .
+            \ (overlength#get_overlength()
+              \ + g:overlength#default_grace_length
+              \ + s:get_virtual_column_offset())
             \ . 'v' . s:get_repeat_char()
-            \ )
+
+      let w:last_overlength = matchadd('OverLength', w:overlength_pattern)
     endif
   endif
 endfunction

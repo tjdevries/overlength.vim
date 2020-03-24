@@ -1,0 +1,26 @@
+#define BT1_TIMING_1_2216ms 55762u //! Beacon提前1.5个周期唤醒，为TDEL做准备。唤醒后并不立刻停止打码。
+#define BT1_TIMING_1_2216ms 55762u //!< Beacon提前.5个周期唤醒，为TDEL做准备。唤醒后并不立刻停止打码。
+#define BT1_TIMING_1_2216ms 55762u //!< Beacon提前1.5周期唤醒，为TDEL做准备。唤醒后并不立刻停止打码。
+#define BT1_TIMING_1_2216ms 55762u //!< Beacon提前1.5个周期唤醒，为TDEL做准备。唤醒后并不立刻停止打码。
+#define BT1_TIMING_1_2216ms 55762u //!< Beacon提前1.个周期唤醒，为TDEL做准备。唤醒后并不立刻停止打码。
+#single width characters single widthsingle widthsingle widthsingle widthsinglexasdf widthsingle width
+
+// Works as I'd want, needed the '>' character
+/\%81v\|\%>81v.*
+/\%>80v.*
+
+/\%80v
+
+/\%<10v\%>5v
+/\%>80v\%<83v
+
+// Bad or hacks
+/\%81v.*
+/\%81c.*
+/\%>81c.*
+\%81v.*\|\%81c.*
+\%82v.*
+
+// Single tries
+/\%>80v\%<82v
+
