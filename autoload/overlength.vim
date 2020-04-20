@@ -97,12 +97,14 @@ function! overlength#highlight() abort
     return
   endif
 
+  let grace_length = get(g:, 'overlength#default_grace_length', 1)
+
   if s:highlight_overlength
     if !exists('w:last_overlength')
       let w:overlength_pattern = '\%' .
             \ s:get_virtual_column_modifier() .
             \ (overlength#get_overlength()
-              \ + g:overlength#default_grace_length
+              \ + grace_length
               \ + s:get_virtual_column_offset())
             \ . 'v' . s:get_repeat_char()
 
