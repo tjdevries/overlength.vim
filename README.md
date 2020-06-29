@@ -23,6 +23,9 @@ let overlength#default_overlength = 120
 " Disable highlighting in markdown.
 call overlength#set_overlength('markdown', 0)
 
+" To disable highlighting in multiple fts at once
+call overlength#disable_filetypes(['markdown', 'term'])
+
 " Highlight only at 120 characters in vim, even though textwidth = 78
 call overlength#set_overlength('vim', 120)
 ```

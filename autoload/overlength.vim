@@ -113,3 +113,8 @@ function! overlength#highlight() abort
   endif
 endfunction
 
+function! overlength#disable_filetypes(ft_list) abort
+  for ft in a:ft_list
+    call overlength#set_overlength(ft, 0)
+  endfor
+endfunction
