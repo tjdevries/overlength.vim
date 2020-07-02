@@ -26,7 +26,7 @@ function! s:get_default_to_tw() abort
 endfunction
 
 function! s:get_repeat_char() abort
-  return get(g:, 'overlength#highlight_to_end_of_line', v:true) ? '.*' : ''
+  return get(g:, 'overlength#highlight_to_end_of_line', v:true) ? '[^\n]*' : ''
 endfunction
 
 function! s:get_virtual_column_modifier() abort
